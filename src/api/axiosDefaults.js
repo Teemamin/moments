@@ -1,5 +1,6 @@
 import axios from "axios";
 
+//tell our React  project to send requests to the API. this file is imported in app.js
 // multipart/form-data  
 // as that is the data format the API will be  expecting. We need the multipart because  
 // our application will be dealing with  images as well as text in its requests. 
@@ -8,3 +9,8 @@ import axios from "axios";
 axios.defaults.baseURL = "https://teemamin-drf-api.herokuapp.com/";
 axios.defaults.headers.post["Content-Type"] = "multipart/form-data";
 axios.defaults.withCredentials = true;
+
+// newly created axios instances  that we’ll attach the interceptors to intercept both requests  
+// and responses from our API and run  custom code before they are passed on. 
+export const axiosReq = axios.create();
+export const axiosRes = axios.create();
