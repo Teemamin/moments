@@ -1,6 +1,7 @@
 import React, { useState, useRef } from "react";
 
 import Form from "react-bootstrap/Form";
+import Alert from "react-bootstrap/Alert";
 import Button from "react-bootstrap/Button";
 import Row from "react-bootstrap/Row";
 import Col from "react-bootstrap/Col";
@@ -66,6 +67,9 @@ function PostCreateForm() {
       }
     };
 
+    const handleCancleBtn = ()=>{
+      history.goBack()
+    }
 
 
 
@@ -77,7 +81,11 @@ function PostCreateForm() {
         <Form.Control type="text" placeholder="Title" name="title" value={postData.title}
          onChange={handleChnage} />
      </Form.Group>
-
+     {errors.title?.map((message, idx) => (
+              <Alert key={idx} variant="warning">
+                {message}
+              </Alert>
+            ))}
      <Form.Group className="mb-3" controlId="content">
         <Form.Label>Textarea</Form.Label>
         <Form.Control as="textarea" rows={3}
@@ -86,10 +94,14 @@ function PostCreateForm() {
         
         />
     </Form.Group>
-    
+    {errors.content?.map((message, idx) => (
+              <Alert key={idx} variant="warning">
+                {message}
+              </Alert>
+            ))}
       <Button
         className={`${btnStyles.Button} ${btnStyles.Blue}`}
-        onClick={() => {}}
+        onClick={handleCancleBtn}
       >
         cancel
       </Button>
@@ -100,7 +112,7 @@ function PostCreateForm() {
   );
 
   return (
-    <Form>
+    <Form onSubmit={handleSubmit}>
       <Row>
         <Col className="py-2 p-0 p-md-2" md={7} lg={8}>
           <Container
@@ -133,6 +145,11 @@ function PostCreateForm() {
                   ref={imageInput}
                   />
             </Form.Group>
+            {errors.image?.map((message, idx) => (
+              <Alert key={idx} variant="warning">
+                {message}
+              </Alert>
+            ))}
             <div className="d-md-none">{textFields}</div>
           </Container>
         </Col>
