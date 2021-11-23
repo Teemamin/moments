@@ -3,7 +3,7 @@ import React, { useEffect, useState } from "react";
 import Col from "react-bootstrap/Col";
 import Row from "react-bootstrap/Row";
 import Container from "react-bootstrap/Container";
-
+import { axiosReq } from "../../api/axiosDefaults";
 import appStyles from "../../App.module.css";
 import { useParams } from "react-router";
 
@@ -13,11 +13,22 @@ function PostPage() {
     const {id} = useParams()
     const [post, setPost] = useState({results:[]})
 
-    useEffect(()=>{
-        const handleMount = ()=>{
-            
+    useEffect(() => {
+      const handleMount = async () => {
+        try {
+          // see notes below
+          const [{ data: post }] = await Promise.all([
+            axiosReq.get(`/posts/${id}`),
+          ]);
+          setPost({ results: [post] });
+          console.log(post);
+        } catch (err) {
+          console.log(err);
         }
-    })
+      };
+  
+      handleMount();
+    }, [id]);
 
   return (
     <Row className="h-100">
@@ -36,3 +47,14 @@ function PostPage() {
 }
 
 export default PostPage;
+
+// Here we are destructing the data property returned  from the API and renaming it to post, later
+// we’ll need to destructure a second property for our  comments data, which we’ll rename to comments.
+// This renaming of an object key will be new to  you and it is another nice destructuring feature,  
+// allowing us to give our  variable a more meaningful name.
+// What Promise.all does is it accepts an array of  promises and gets resolved when all the promises  
+// get resolved, returning an array of data. If any of the promises in the array fail,  
+// Promise.all gets rejected with an error.
+// In our case the data returned  is the post we requested.
+// The reason we’re using Promise.all here  is that in a later video we’ll add a  
+// second API request inside it, to fetch  data about the post comments.

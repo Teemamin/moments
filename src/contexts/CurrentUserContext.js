@@ -1,4 +1,4 @@
-import { createContext, useContext, useEffect, useState, useMemo } from "react";
+import { createContext, useContext, useEffect, useMemo, useState } from "react";
 import axios from "axios";
 import { axiosReq, axiosRes } from "../api/axiosDefaults";
 import { useHistory } from "react-router";
@@ -12,8 +12,8 @@ export const useSetCurrentUser = () => useContext(SetCurrentUserContext);
 export const CurrentUserProvider = ({ children }) => {
   const [currentUser, setCurrentUser] = useState(null);
   const history = useHistory();
+
   const handleMount = async () => {
-    //get the current logged in user wen the component mounts
     try {
       const { data } = await axiosRes.get("dj-rest-auth/user/");
       setCurrentUser(data);
@@ -23,14 +23,10 @@ export const CurrentUserProvider = ({ children }) => {
   };
 
   useEffect(() => {
-    //run wen component mounts
     handleMount();
   }, []);
 
   useMemo(() => {
-    // useMemo is usually used to cache  complex values that take time to compute
-    // it runs before the children components are mounted
-    // attach the interceptors  before the children mount
     axiosReq.interceptors.request.use(
       async (config) => {
         try {
