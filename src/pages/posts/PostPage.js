@@ -1,11 +1,12 @@
 import React, { useEffect, useState } from "react";
-
+import Post from "./Post";
 import Col from "react-bootstrap/Col";
 import Row from "react-bootstrap/Row";
 import Container from "react-bootstrap/Container";
 import { axiosReq } from "../../api/axiosDefaults";
 import appStyles from "../../App.module.css";
 import { useParams } from "react-router";
+
 
 function PostPage() {
   // using react router useParams hook and destructure  
@@ -34,7 +35,7 @@ function PostPage() {
     <Row className="h-100">
       <Col className="py-2 p-0 p-lg-2" lg={8}>
         <p>Popular profiles for mobile</p>
-        <p>Post component</p>
+        <Post {...post.results[0]} setPost={setPost} postPage/>
         <Container className={appStyles.Content}>
           Comments
         </Container>
