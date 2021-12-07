@@ -14,7 +14,7 @@ function Post(props) {
         image_field,
         comments_count,
         likes_count,
-        like_id,
+        is_liked,
         title,
         content,
         image,
@@ -35,7 +35,7 @@ function Post(props) {
                 results: prevPosts.results.map((post) => {
                     console.log(post.id, id)
                   return post.id === id
-                    ? { ...post, likes_count: post.likes_count + 1, like_id: data.id }
+                    ? { ...post, likes_count: post.likes_count + 1, is_liked: data.id }
                     : post;
                 }),
               }));
@@ -44,6 +44,21 @@ function Post(props) {
         }
 
     }
+    const handleUnlike = async () => {
+      try {
+        await axiosRes.delete(`/likes/${is_liked}/`);
+        setPost((prevPosts) => ({
+          ...prevPosts,
+          results: prevPosts.results.map((post) => {
+            return post.id === id
+              ? { ...post, likes_count: post.likes_count - 1, is_liked: null }
+              : post;
+          }),
+        }));
+      } catch (err) {
+        console.log(err);
+      }
+    };
     return (
         <Card className={styles.Post}>
           <Card.Body>
@@ -63,40 +78,39 @@ function Post(props) {
             <Card.Img src={image} alt={title} />
           </Link>
           <Card.Body>
-            {title && <Card.Title className="text-center">{title}</Card.Title>}
-            {content && <Card.Text>{content}</Card.Text>}
-            <div className={styles.PostBar}>
-              {is_owner ? (
-                <OverlayTrigger
-                  placement="top"
-                  overlay={<Tooltip>You can't like your own post!</Tooltip>}
-                >
-                  <i className="far fa-heart" />
-                </OverlayTrigger>
-                // if like_id that means the user has liked the post
-              ) : like_id ? (
-                <span onClick={() => {}}>
-                  <i className={`fas fa-heart ${styles.Heart}`} />
-                </span>
-              ) : currentUser ? (
-                <span onClick={handleLike}>
-                  <i className={`far fa-heart ${styles.HeartOutline}`} />
-                </span>
-              ) : (
-                <OverlayTrigger
-                  placement="top"
-                  overlay={<Tooltip>Log in to like posts!</Tooltip>}
-                >
-                  <i className="far fa-heart" />
-                </OverlayTrigger>
-              )}
-              {likes_count}
-              <Link to={`/posts/${id}`}>
-                <i className="far fa-comments" />
-              </Link>
-              {comments_count}
-            </div>
-          </Card.Body>
+        {title && <Card.Title className="text-center">{title}</Card.Title>}
+        {content && <Card.Text>{content}</Card.Text>}
+        <div className={styles.PostBar}>
+          {is_owner ? (
+            <OverlayTrigger
+              placement="top"
+              overlay={<Tooltip>You can't like your own post!</Tooltip>}
+            >
+              <i className="far fa-heart" />
+            </OverlayTrigger>
+          ) : is_liked ? (
+            <span onClick={handleUnlike}>
+              <i className={`fas fa-heart ${styles.Heart}`} />
+            </span>
+          ) : currentUser ? (
+            <span onClick={handleLike}>
+              <i className={`far fa-heart ${styles.HeartOutline}`} />
+            </span>
+          ) : (
+            <OverlayTrigger
+              placement="top"
+              overlay={<Tooltip>Log in to like posts!</Tooltip>}
+            >
+              <i className="far fa-heart" />
+            </OverlayTrigger>
+          )}
+          {likes_count}
+          <Link to={`/posts/${id}`}>
+            <i className="far fa-comments" />
+          </Link>
+          {comments_count}
+        </div>
+      </Card.Body>
         </Card>
       );
     };
