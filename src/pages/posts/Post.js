@@ -20,7 +20,7 @@ function Post(props) {
         image,
         updated_at,
         postPage,
-        setPost
+        setPosts
       } = props;
 
     const currentUser = useCurrentUser();
@@ -30,7 +30,7 @@ function Post(props) {
             const {data} = await axiosRes.post("likes/", {post: id})
             // handle checking if it has  
             // the right post id before applying the like to it.
-            setPost((prevPosts) => ({
+            setPosts((prevPosts) => ({
                 ...prevPosts,
                 results: prevPosts.results.map((post) => {
                     console.log(post.id, id)
@@ -47,7 +47,7 @@ function Post(props) {
     const handleUnlike = async () => {
       try {
         await axiosRes.delete(`/likes/${is_liked}/`);
-        setPost((prevPosts) => ({
+        setPosts((prevPosts) => ({
           ...prevPosts,
           results: prevPosts.results.map((post) => {
             return post.id === id
