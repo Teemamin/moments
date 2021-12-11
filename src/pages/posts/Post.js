@@ -1,10 +1,11 @@
 import React from 'react'
 import { useCurrentUser } from "../../contexts/CurrentUserContext";
 import { Card, Media, OverlayTrigger, Tooltip } from "react-bootstrap";
-import { Link } from "react-router-dom";
+import { Link, useHistory } from "react-router-dom";
 import Avatar from "../../components/Avatar";
 import styles from "../../styles/Post.module.css";
 import { axiosRes } from '../../api/axiosDefaults';
+import { MoreDropdown } from "../../components/MoreDropdown";
 
 function Post(props) {
     const {
@@ -25,6 +26,8 @@ function Post(props) {
 
     const currentUser = useCurrentUser();
     const is_owner = currentUser?.username === owner;
+    const history = useHistory();
+
     const handleLike = async ()=>{
         try{
             const {data} = await axiosRes.post("likes/", {post: id})
@@ -59,6 +62,20 @@ function Post(props) {
         console.log(err);
       }
     };
+
+    const handleEdit = () => {
+      history.push(`/posts/${id}/edit`);
+    };
+
+    const handleDelete = async () => {
+      try {
+        await axiosRes.delete(`/posts/${id}/`);
+        history.goBack();
+      } catch (err) {
+        console.log(err);
+      }
+    };
+
     return (
         <Card className={styles.Post}>
           <Card.Body>
@@ -70,7 +87,11 @@ function Post(props) {
               <div className="d-flex align-items-center">
                 <span>{updated_at}</span>
                 {/* using postPage we knw if to display the edit/delte  */}
-                {is_owner && postPage && "..."}
+                {is_owner && postPage && ( 
+                <MoreDropdown
+                handleEdit={handleEdit}
+                handleDelete={handleDelete}
+              />)}
               </div>
             </Media>
           </Card.Body>
