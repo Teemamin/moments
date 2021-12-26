@@ -1,12 +1,13 @@
-import React,{ createContext, useContext, useEffect, useMemo, useState } from "react";
+import React,{ createContext, useContext, useEffect, useState } from "react";
+import { axiosReq } from "../api/axiosDefaults";
 import { useCurrentUser } from "./CurrentUserContext"
 
 
 export const ProfileDataContext = createContext();
 export const SetProfileDataContext = createContext();
 
-export const useProfileDataContext = () => useContext(ProfileDataContext);
-export const useSetProfileDataContext = () => useContext(SetProfileDataContext);
+export const useProfileData = () => useContext(ProfileDataContext);
+export const useSetProfileData = () => useContext(SetProfileDataContext);
 
 function ProfileDataProvider({ children }) {
     const [profileData, setProfileData] = useState({
