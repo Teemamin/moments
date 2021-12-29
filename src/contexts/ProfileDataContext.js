@@ -93,7 +93,7 @@ function ProfileDataProvider({ children }) {
     return (
         <div>
             <ProfileDataContext.Provider value={profileData}>
-              //sedning more than 1 value, you need to add extr set of curly bracket
+              {/* sedning more than 1 value, you need to add extr set of curly bracket */}
                 <SetProfileDataContext.Provider value={{ setProfileData, handleFollow, handleUnfollow }}>
                     {children}
                 </SetProfileDataContext.Provider>

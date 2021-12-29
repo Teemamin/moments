@@ -98,5 +98,5 @@ function PostsPage({ message, filter = "" }) {
 );
 }
 export default PostsPage;
-{/* the hasMore prop tells the InfiniteScroll component whether there is more data
-               to load on  reaching the bottom of the current page of data */}
+//  the hasMore prop tells the InfiniteScroll component whether there is more data
+//  to load on  reaching the bottom of the current page of data 
