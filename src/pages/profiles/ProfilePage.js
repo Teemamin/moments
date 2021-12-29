@@ -42,7 +42,7 @@ function ProfilePage() {
             setProfilePosts(profilePosts);
             setHasLoaded(true);
           }catch(e){
-            console.log(e)
+            // console.log(e)
           }
       }
       fetchData()

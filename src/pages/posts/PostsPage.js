@@ -30,7 +30,7 @@ function PostsPage({ message, filter = "" }) {
         setPosts(data);
         setHasLoaded(true);
       } catch (err) {
-        console.log(err);
+        // console.log(err);
       }
     };
  //setHasLoaded to false before we fetch the posts, so that our  loading

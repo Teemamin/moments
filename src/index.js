@@ -9,7 +9,6 @@ import  ProfileDataProvider  from "./contexts/ProfileDataContext";
 
 
 ReactDOM.render(
-  <React.StrictMode>
     <Router>
       {/* to make context available globally */}
       <CurrentUserProvider>
@@ -17,10 +16,12 @@ ReactDOM.render(
            <App />
         </ProfileDataProvider>
       </CurrentUserProvider>
-    </Router>
-  </React.StrictMode>,
+    </Router>,
   document.getElementById('root')
 );
+
+// StrictMode is for development purposes only and we are getting ready
+// for our final deployment, we can remove it
 
 // If you want to start measuring performance in your app, pass a function
 // to log results (for example: reportWebVitals(console.log))

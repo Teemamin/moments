@@ -36,7 +36,7 @@ function PostPage() {
           setComments(comments);
           // console.log(post);
         } catch (err) {
-          console.log(err);
+          // console.log(err);
         }
       };
   

@@ -1,3 +1,4 @@
+import jwtDecode from "jwt-decode";
 import { axiosReq } from "../api/axiosDefaults";
 
 export const fetchMoreData = async (resource, setResource) => {
@@ -49,6 +50,25 @@ export const unfollowHelper  = (profile, clickedProfile) => {
     : // this is not the profile the user clicked on or the profile
       // the user owns, so just return it unchanged
       profile;
+};
+
+export const setTokenTimestamp = (data) => {
+  // this function should extract the expiry date from the access token
+  // and save it to the user's browser in local storage.
+  // This object comes with an expiry date with the key of exp,
+  // so we can save the ‘exp’ attribute to a variable
+  const refreshTokenTimestamp = jwtDecode(data?.refresh_token).exp;
+  // Finally, we can save that value to the user's browser using localStorage
+  localStorage.setItem("refreshTokenTimestamp", refreshTokenTimestamp);
+};
+
+export const shouldRefreshToken = () => {
+  //tells if an expiry date exists in the users local storage
+  return !!localStorage.getItem("refreshTokenTimestamp");
+};
+
+export const removeTokenTimestamp = () => {
+  localStorage.removeItem("refreshTokenTimestamp");
 };
 
 // Here we used the reduce method to loop through  the new page of results that we got from our API. 

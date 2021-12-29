@@ -36,14 +36,14 @@ function Post(props) {
             setPosts((prevPosts) => ({
                 ...prevPosts,
                 results: prevPosts.results.map((post) => {
-                    console.log(post.id, id)
+                    // console.log(post.id, id)
                   return post.id === id
                     ? { ...post, likes_count: post.likes_count + 1, is_liked: data.id }
                     : post;
                 }),
               }));
         }catch(e){
-            console.log(e)
+            // console.log(e)
         }
 
     }

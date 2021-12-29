@@ -37,7 +37,7 @@ function ProfileDataProvider({ children }) {
           }));
            
         }catch(e){
-          console.log(e)
+          // console.log(e)
         }
 
       }
@@ -66,7 +66,7 @@ function ProfileDataProvider({ children }) {
 
 
         } catch (err) {
-          console.log(err);
+          // console.log(err);
         }
       };
 
@@ -84,7 +84,7 @@ function ProfileDataProvider({ children }) {
               popularProfiles: data,
             }));
           } catch (err) {
-            console.log(err);
+            // console.log(err);
           }
         };
     
