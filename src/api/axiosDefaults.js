@@ -6,7 +6,8 @@ import axios from "axios";
 // our application will be dealing with  images as well as text in its requests. 
 // To avoid any CORS errors when sending cookies,  we also need to set withCredentials to true.
 
-axios.defaults.baseURL = "https://teemamin-drf-api.herokuapp.com/";
+// axios.defaults.baseURL = "https://teemamin-drf-api.herokuapp.com/"; this was used for the api deployed on heroku
+axios.defaults.baseURL = "https://web-production-06c5.up.railway.app/";
 axios.defaults.headers.post["Content-Type"] = "multipart/form-data";
 axios.defaults.withCredentials = true;
 
